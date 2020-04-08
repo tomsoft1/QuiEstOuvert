@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "400307074537",
+    "firebase_url": "https://quiestouvert.firebaseio.com",
+    "project_id": "quiestouvert",
+    "storage_bucket": "quiestouvert.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400307074537:android:39882b807cfe066ae30778",
+        "android_client_info": {
+          "package_name": "com.digiwiz.QuiEstOuvert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400307074537-r0fcec4c74ara105emq7rr25cqc5seff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChBZT1CT1fk7I1XXtwLDyJxGrTNrqw99I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400307074537-r0fcec4c74ara105emq7rr25cqc5seff.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "400307074537-6ji7uu0r6itfv7spp08ukhu8ehk5fdiu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "QuiEstOuvert"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
