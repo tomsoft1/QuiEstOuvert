@@ -1,3 +1,7 @@
+// @ Thomas LANDSPURG 2020
+// An open source application to display open commerces during COVID19
+//
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -5,24 +9,14 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(QuiEstOuvertApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class QuiEstOuvertApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MapPage(title: 'Qui Est Ouvert'),
@@ -67,6 +61,7 @@ class _MapPageState extends State<MapPage> {
         ));
   }
 
+   // Do a query to Firebase, centered on "location" with a radius of "rad"
   _startQuery(LatLng location) async {
     // Make a referece to firestore
     var ref = Firestore.instance.collection('locations');
@@ -82,6 +77,9 @@ class _MapPageState extends State<MapPage> {
         .listen(_updateMarkers);
   }
 
+  // Update the marker according to the list of document 
+  // received from Firebase.
+  //
   void _updateMarkers(List<DocumentSnapshot> documentList) {
     print("UpdateMarkers");
     print("Document list length: ${documentList.length}");
@@ -113,6 +111,8 @@ class _MapPageState extends State<MapPage> {
   void _initLocation() async {
     currentLoc = await location.getLocation();
   }
+
+  // When user stop to move the map, we do a query to update points around
   void _onCameraIdle() async {
     print("Idle");
     LatLngBounds bounds = await mapController.getVisibleRegion();
@@ -123,6 +123,7 @@ class _MapPageState extends State<MapPage> {
     _startQuery(center);
   }
 
+  // Save map controller reference
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
       mapController = controller;
