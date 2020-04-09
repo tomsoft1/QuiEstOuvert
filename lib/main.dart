@@ -185,7 +185,7 @@ class _MapPageState extends State<MapPage> {
     var ref = Firestore.instance.collection('locations');
     GeoFirePoint center =
         geo.point(latitude: location.latitude, longitude: location.longitude);
-    if(center != lastCenter){
+    if((center.latitude != lastCenter.latitude)||(center.longitude != lastCenter.longitude)){
       lastCenter = center;
     return geo
         .collection(collectionRef: ref)
