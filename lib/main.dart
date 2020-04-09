@@ -3,7 +3,6 @@
 //
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:QuiEstOuvert/select_cat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,7 +12,8 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
 import 'package:latlong/latlong.dart';
 import 'package:user_location/user_location.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
+import 'information_screen.dart';
 
 void main() => runApp(QuiEstOuvertApp());
 
@@ -297,94 +297,5 @@ class _MapPageState extends State<MapPage> {
       print("Timer raised");
       _startQuery(pos.center);
     });
-  }
-}
-
-class InformationScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Use the Todo to create the UI.
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("A propos"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children:[
-          Container(padding: EdgeInsets.only(bottom: 30),child: Text("Qui Est Ouvert?",style:TextStyle(fontSize:20))),
-          Text("@Thomas LANDSPURG 2020",style:TextStyle(fontSize: 15,color: Colors.grey)),
-          Text("Cette application utilise les données Open Source pour vous afficher les commeres ouvert même en confinement.... Contact: thomas.landspurg@gmail.com"),
-          Text("v0.1.1  9/04/2020")],
-      ),
-    ));
-  }
-}
-
-const String kNavigationExamplePage = '''
-<!DOCTYPE html><html>
-<meta name="viewport" content="width=device-width; minimum-scale=1.0; maximum-scale=1.0; user-scalable=no">
-<head><title>Qui est Ouvert?</title></head>
-<body>
-<p>
-Cette application affiche les commerces ouverts pendant le confinement, et utilise les donees Open Source 
-obtenue sur le site du gouv:
-
-<a href=https://www.data.gouv.fr/fr/datasets/lieux-ouverts-ou-fermes-pendant-le-confinement-covid-19/#_>https://www.data.gouv.fr/fr/datasets/lieux-ouverts-ou-fermes-pendant-le-confinement-covid-19/#_</a></p>
-<ul>
-<ul><a href="https://www.youtube.com/">https://www.youtube.com/</a></ul>
-<ul><a href="https://www.google.com/">https://www.google.com/</a></ul>
-</ul>
-</body>
-</html>
-''';
-
-class WebViewExample extends StatefulWidget {
-  @override
-  _WebViewExampleState createState() => _WebViewExampleState();
-}
-
-class _WebViewExampleState extends State<WebViewExample> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('A propos'),
-        // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
-      ),
-      // We're using a Builder here so we have a context that is below the Scaffold
-      // to allow calling Scaffold.of(context) so we can show a snackbar.
-      body: Builder(builder: (BuildContext context) {
-    return WebView(
-          initialUrl: 'https://flutter.dev',
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller.complete(webViewController);
-
-               final String contentBase64 =
-        base64Encode(const Utf8Encoder().convert(kNavigationExamplePage));
-            webViewController.loadUrl('data:text/html;base64,$contentBase64');
-          },
-
-          navigationDelegate: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              print('blocking navigation to $request}');
-              return NavigationDecision.prevent;
-            }
-            print('allowing navigation to $request');
-            return NavigationDecision.navigate;
-          },
-          onPageStarted: (String url) {
-            print('Page started loading: $url');
-          },
-          onPageFinished: (String url) {
-            print('Page finished loading: $url');
-          },
-          gestureNavigationEnabled: true,
-        );
-      })
-    );
   }
 }
